@@ -7,7 +7,9 @@
 import Config
 
 config :minesweeper,
-  ecto_repos: [Minesweeper.Repo]
+  ecto_repos: [Minesweeper.Repo],
+url: System.get_env("DATABASE_URL"),
+pool_size: 15
 
 # Configure the database connection URL.
 config :minesweeper, Minesweeper.Repo, url: "ecto://minesweeper@localhost/minesweeper"

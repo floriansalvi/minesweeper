@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Variables
+DEPLOY_DIR="/home/fsi/minesweeper"   # Adjust the path if necessary
+APP_DIR="${DEPLOY_DIR}/minesweeper"  # The directory where your application is deployed
+BRANCH="main"                        # Branch you want to deploy
+
+# Navigate to the deployment directory
+cd $APP_DIR
+
+# Check out the latest version of the code
+git checkout $BRANCH
+git pull origin $BRANCH
+
+# Install backend dependencies (Elixir)
+mix deps.get
+
+# Compile the Elixir project
+mix compile
+
+# Run database migrations
+MIX_ENV=prod mix ecto.migrate
+
+# Build frontend (if using Alpine.js or other frontend build tools)
+cd assets
+npm install
+npm run deploy  # or the appropriate build command for your frontend
+
+# Rebuild the Elixir release (if needed)
+cd ..
+MIX_ENV=prod mix release
+
+# Restart the systemd service to apply changes
+sudo systemctl restart minesweeper
+
+echo "Deployment completed successfully"
