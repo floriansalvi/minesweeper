@@ -14,13 +14,13 @@ config :minesweeper, Minesweeper.Repo, url: "ecto://minesweeper@localhost/minesw
 
 # Configure the web endpoint.
 config :minesweeper, MinesweeperWeb.Endpoint,
-  http: [port: 3000],
+  http: [port: 3001],
   pubsub_server: Minesweeper.PubSub,
   render_errors: [view: MinesweeperWeb.Errors.ErrorsView, accepts: ~w(html json), layout: false],
   server: true,
   url: [
     host: "localhost",
-    port: 3000
+    port: 3001
   ]
 
 # Configures Elixir's Logger.
